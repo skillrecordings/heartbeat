@@ -1,0 +1,20 @@
+name: Playwright Demo
+run-name: ${{ github.actor }} is testing Playwright GitHub Actions 🚀
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
+jobs:
+  Pre-Canary-Run:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+  Total-TypeScript-Canary:
+    uses: './.github/workflows/playwright-total-typescript.yml'
+  Pro-Tailwind-Canary:
+    uses: './.github/workflows/playwright-protailwind.yml'
+  Egghead-Canary:
+    uses: './.github/workflows/playwright-egghead.yml'

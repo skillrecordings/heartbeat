@@ -1,0 +1,25 @@
+{
+  "name": "heartbeat",
+  "version": "1.0.0",
+  "description": "Heartbeats and canaries to check the health of SkillRecordings products",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "healthcheck": "./bin/healthcheck.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skillrecordings/heartbeat.git"
+  },
+  "author": "jbranchaud",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skillrecordings/heartbeat/issues"
+  },
+  "homepage": "https://github.com/skillrecordings/heartbeat#readme",
+  "dependencies": {
+    "playwright-core": "^1.35.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
+  }
+}
