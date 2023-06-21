@@ -1,4 +1,3 @@
-import {retry} from '../retry'
 import {runHealthChecks, Step} from '../runner'
 
 const baseUrl = 'https://totaltypescript.com'
@@ -59,9 +58,8 @@ export const testTotalTypeScript = async ({ event, step }: {event: any; step: St
 
     await page.waitForTimeout(500)
 
-    const customSleep = async (retryIntervalMs: number) => { await page.waitForTimeout(retryIntervalMs) }
-    const options = { retries: 3, retryIntervalMs: 500, customSleep }
-    await retry(async () => {
+    const options = { retries: 3, retryIntervalMs: 500 }
+    await page.retry(async () => {
       const headingVisible =
         await page
         .getByRole('heading', { name: "Type Transformations Workshop Welcome" })

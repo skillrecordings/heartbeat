@@ -1,4 +1,3 @@
-import {retry} from '../retry'
 import {runHealthChecks, Step} from '../runner'
 
 const baseUrl = 'https://egghead.io'
@@ -21,9 +20,8 @@ export const testEgghead = async ({ event, step }: {event: any; step: Step}) => 
     // Sometimes the pricing takes a moment to load
     await page.waitForTimeout(500)
 
-    const customSleep = async (retryIntervalMs: number) => { await page.waitForTimeout(retryIntervalMs) }
-    const options = { retries: 3, retryIntervalMs: 500, customSleep }
-    await retry(async () => {
+    const options = { retries: 3, retryIntervalMs: 500 }
+    await page.retry(async () => {
       const priceIsVisible =
         await page.locator('div')
           .filter({ hasText: /^USD\$250$/ })
@@ -68,9 +66,8 @@ export const testEgghead = async ({ event, step }: {event: any; step: Step}) => 
     await page.waitForTimeout(500)
 
     // Click The Beginner's Guide to React course
-    const customSleep = async (retryIntervalMs: number) => { await page.waitForTimeout(retryIntervalMs) }
-    const options = { retries: 3, retryIntervalMs: 500, customSleep }
-    await retry(async () => {
+    const options = { retries: 3, retryIntervalMs: 500 }
+    await page.retry(async () => {
       await page
         .getByRole('link', { name: "The Beginner's Guide to React" })
         .first()
@@ -97,7 +94,7 @@ export const testEgghead = async ({ event, step }: {event: any; step: Step}) => 
       .filter({ hasText: "A Beginners Guide to React Introduction" })
       .isVisible()
 
-    await retry(async () => {
+    await page.retry(async () => {
       const videoVisible = await page.locator('video').isVisible()
 
       if(videoVisible) {

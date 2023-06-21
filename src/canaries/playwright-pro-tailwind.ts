@@ -1,4 +1,3 @@
-import {retry} from '../retry'
 import {runHealthChecks, Step} from '../runner'
 
 const baseUrl = 'https://protailwind.com'
@@ -74,9 +73,8 @@ export const testProTailwind = async ({ event, step }: {event: any; step: Step})
     // Sometimes the pricing takes a moment to load
     await page.waitForTimeout(500)
 
-    const customSleep = async (retryIntervalMs: number) => { await page.waitForTimeout(retryIntervalMs) }
-    const options = { retries: 3, retryIntervalMs: 500, customSleep }
-    const {validPricing, text} = await retry(async () => {
+    const options = { retries: 3, retryIntervalMs: 500 }
+    const {validPricing, text} = await page.retry(async () => {
       // Find the div with the 'data-price' attribute within the main div
       const pricingDiv = await page.$('div#main-pricing div[data-price]');
       const text = (pricingDiv && await pricingDiv.textContent()) || '';
@@ -136,9 +134,8 @@ export const testProTailwind = async ({ event, step }: {event: any; step: Step})
 
     await page.waitForTimeout(500)
 
-    const customSleep = async (retryIntervalMs: number) => { await page.waitForTimeout(retryIntervalMs) }
-    const options = { retries: 3, retryIntervalMs: 500, customSleep }
-    const {videoTagVisible} = await retry(async () => {
+    const options = { retries: 3, retryIntervalMs: 500 }
+    const {videoTagVisible} = await page.retry(async () => {
       console.log("Checking for Video tag")
       const videoVisible = await page.locator('video').isVisible()
 

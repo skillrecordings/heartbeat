@@ -9,10 +9,10 @@
  */
 const sleep = (ms = 0) => new Promise((resolve: any) => setTimeout(resolve, ms))
 
-type Options = {
+export type Options = {
   retries: number;
   retryIntervalMs: number;
-  customSleep: (arg0: number) => Promise<void> | undefined;
+  customSleep?: (arg0: number) => Promise<void>;
 }
 
 export const retry = async <T>(
@@ -27,7 +27,7 @@ export const retry = async <T>(
     if (retries <= 0) {
       throw error
     }
-    if(Boolean(customSleep)) {
+    if(customSleep) {
       await customSleep(retryIntervalMs)
     } else {
       await sleep(retryIntervalMs)
